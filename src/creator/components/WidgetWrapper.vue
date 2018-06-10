@@ -1,16 +1,32 @@
 <template>
-    <div class="widget-wrapper" :id="id">
+    <div class="widget-wrapper" :id="id" :class="{isActived:isActived}">
+      {{isActived}}
         <slot></slot>
     </div>
 </template>
 
 <script>
 import interact from 'interactjs'
-import { create_id } from '@/utils'
 export default {
-  data() {
-    return {
-      id: null
+  // data() {
+  //   return {
+  //     id: null
+  //   }
+  // },
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
+  // methods: {
+  //   postActivedId() {
+  //     this.$store.commit('SET_ACTIVATED', this.id)
+  //   }
+  // },
+  computed: {
+    isActived() {
+      return this.$store.state.activated_id === this.id
     }
   },
   mounted() {
@@ -23,9 +39,8 @@ export default {
           const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
           // translate the element
-          target.style.webkitTransform =
-    target.style.transform =
-      'translate(' + x + 'px, ' + y + 'px)'
+          target.style.webkitTransform = target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)'
 
           // update the posiion attributes
           target.setAttribute('data-x', x)
@@ -51,12 +66,11 @@ export default {
         restrictSize: {
           min: { width: 50, height: 50 }
         }
-
       })
       .on('resizemove', function(event) {
         const target = event.target
-        let x = (parseFloat(target.getAttribute('data-x')) || 0)
-        let y = (parseFloat(target.getAttribute('data-y')) || 0)
+        let x = parseFloat(target.getAttribute('data-x')) || 0
+        let y = parseFloat(target.getAttribute('data-y')) || 0
 
         // update the element's style
         target.style.width = event.rect.width + 'px'
@@ -67,29 +81,35 @@ export default {
         y += event.deltaRect.top
 
         target.style.webkitTransform = target.style.transform =
-        'translate(' + x + 'px,' + y + 'px)'
+          'translate(' + x + 'px,' + y + 'px)'
 
         target.setAttribute('data-x', x)
         target.setAttribute('data-y', y)
         // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
       })
-  },
-  created() {
-    this.id = create_id()
   }
+  // created() {
+  //   this.id = create_id()
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
-.widget-wrapper{
+.widget-wrapper {
   position: absolute;
   left: 0;
-  top:0;
+  top: 0;
   width: 80px;
   height: 80px;
   background: red;
   display: inline-block;
   box-sizing: border-box;
+}
+.widget-wrapper:focus {
+  background: #111;
+}
+.isActived {
+  background: #123;
 }
 </style>
 

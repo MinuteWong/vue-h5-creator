@@ -6,20 +6,25 @@
         {{item}}
       </li>
     </ul>
+    {{id}}
     <div class="container" id="main-wrapper">
-
     </div>
   </div>
 </template>
 
 <script>
-import Creator from '@/components'
+import Creator from './creator'
 export default {
   name: 'App',
   data() {
     return {
       wrapper: null,
       widgetList: []
+    }
+  },
+  computed: {
+    id() {
+      return this.$store.state.activated_id
     }
   },
   methods: {
@@ -37,18 +42,18 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.container{
+.container {
   width: 375px;
   height: 750px;
   margin: 0 auto;
   position: relative;
-  background: url('/static/simple.jpg')
+  background: url("/static/simple.jpg");
 }
-.list{
+.list {
   cursor: pointer;
 }
 </style>
