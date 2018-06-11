@@ -12,6 +12,14 @@ document.addEventListener('click', function(e) {
   }
   return store.commit('SET_ACTIVATED', null)
 })
+document.addEventListener('keyup', function(e) {
+  if (e.keyCode !== 46) return false
+  if (store.state.activated_id) {
+    return store.dispatch('REMOVE_COMPONENT', store.state.activated_id).then(res => {
+      console.log(store.state)
+    })
+  }
+})
 export default {
   widget: WidgetWrapper,
   components,
@@ -21,12 +29,14 @@ export default {
       el: document.createElement('div'),
       store,
       data: {
-        id: create_id()
+        id: create_id(),
+        destroyed: false
       },
       created() {
-        this.$store.commit('ADD_COMPONENT_TYPE', this.id, this)
+        this.$store.commit('ADD_COMPONENT_TYPE', { [this.id]: this })
       },
       render: function(h) {
+        if (this.destroyed) return h('')
         return h(WidgetWrapper, {
           props: {
             id: this.id
