@@ -6,7 +6,6 @@
         {{item}}
       </li>
     </ul>
-    {{id}}
     <div class="container" id="main-wrapper">
     </div>
   </div>

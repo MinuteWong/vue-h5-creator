@@ -1,7 +1,14 @@
 <template>
-    <div class="widget-wrapper" :id="id" :class="{isActived:isActived}">
-      {{isActived}}
-        <slot></slot>
+    <div class="widget-wrapper" :id="id">
+      <p class="widget-tips">
+        x:{{options.style.left}}
+        y:{{options.style.top}}
+        宽：{{options.style.width}}
+        高：{{options.style.height}}
+      </p>
+      <div :class="{'widget-model':isActived}" class="widget-container">
+          <slot></slot>
+      </div>
     </div>
 </template>
 
@@ -19,17 +26,16 @@ export default {
       required: true
     }
   },
-  // methods: {
-  //   postActivedId() {
-  //     this.$store.commit('SET_ACTIVATED', this.id)
-  //   }
-  // },
   computed: {
     isActived() {
       return this.$store.state.activated_id === this.id
+    },
+    options() {
+      return this.$store.state.component_type[this.id].options
     }
   },
   mounted() {
+    const vm = this
     interact(`#${this.id}`)
       .draggable({
         onmove: function(event) {
@@ -45,6 +51,7 @@ export default {
           // update the posiion attributes
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
+          vm.$store.commit('OPTIONS_CHANGE', { id: vm.id, options: { style: { left: x, top: y }}})
         },
         restrict: {
           restriction: 'parent',
@@ -85,6 +92,7 @@ export default {
 
         target.setAttribute('data-x', x)
         target.setAttribute('data-y', y)
+        vm.$store.commit('OPTIONS_CHANGE', { id: vm.id, options: { style: { width: target.style.width, height: target.style.height }}})
         // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
       })
   }
@@ -99,17 +107,21 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  width: 80px;
-  height: 80px;
   background: red;
-  display: inline-block;
   box-sizing: border-box;
 }
-.widget-wrapper:focus {
-  background: #111;
+.widget-container{
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+   box-sizing: border-box;
 }
-.isActived {
-  background: #123;
+.widget-model{
+  border: 2px solid  blue
+}
+.widget-tips{
+  position: absolute;
+  z-index: 99
 }
 </style>
 

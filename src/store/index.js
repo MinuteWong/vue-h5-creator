@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import _ from 'lodash'
 
 Vue.use(Vuex)
 const store = new Vuex.Store({
@@ -17,15 +18,18 @@ const store = new Vuex.Store({
       state.component_type = Object.assign({}, state.component_type, vm)
     },
     DELETE_COMPONENT_TYPE(state, activated_id) {
-      state.component_type[activated_id].$destroy()
+      state.component_type[activated_id].vm.$destroy()
       delete state.component_type[activated_id]
       state.component_type = Object.assign({}, state.component_type)
+    },
+    OPTIONS_CHANGE(state, data) {
+      state.component_type[data.id].options = Object.assign({}, _.merge(state.component_type[data.id].options, data.options))
     }
   },
   actions: {
     REMOVE_COMPONENT({ state, commit }, activated_id) {
       return new Promise((resolve, reject) => {
-        state.component_type[activated_id].destroyed = true
+        state.component_type[activated_id].vm.destroyed = true
         resolve()
       }).then(() => {
         commit('DELETE_COMPONENT_TYPE', activated_id)

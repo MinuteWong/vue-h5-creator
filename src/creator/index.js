@@ -3,6 +3,8 @@ import WidgetWrapper from './components/WidgetWrapper.vue'
 import { create_id } from '@/utils'
 import components from '@/library'
 import store from '@/store'
+import initOptions from './initOptions'
+import _ from 'lodash'
 
 document.addEventListener('click', function(e) {
   for (let i = 0; i < e.path.length; i++) {
@@ -33,7 +35,7 @@ export default {
         destroyed: false
       },
       created() {
-        this.$store.commit('ADD_COMPONENT_TYPE', { [this.id]: this })
+        this.$store.commit('ADD_COMPONENT_TYPE', { [this.id]: { vm: this, options: _.cloneDeep(initOptions) }})
       },
       render: function(h) {
         if (this.destroyed) return h('')
