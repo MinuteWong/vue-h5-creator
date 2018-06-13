@@ -114,10 +114,17 @@ export default {
   overflow: hidden;
   height: 100%;
   width: 100%;
+  position: relative;
    box-sizing: border-box;
 }
-.widget-model{
-  border: 2px solid  blue
+.widget-model::before{
+  content: "";
+  width:100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  border: 2px solid  blue;
+  z-index: 100;
 }
 .widget-tips{
   position: absolute;
