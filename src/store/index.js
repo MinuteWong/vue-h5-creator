@@ -9,6 +9,11 @@ const store = new Vuex.Store({
     activated_component: null,
     component_type: {}
   },
+  getters: {
+    activated_options: state => {
+      return state.activated_component && state.activated_component.options
+    }
+  },
   mutations: {
     SET_ACTIVATED(state, id) {
       state.activated_id = id

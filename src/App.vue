@@ -6,15 +6,20 @@
         {{item}}
       </li>
     </ul>
+    <operator-pannel></operator-pannel>
     <div class="container" id="main-wrapper">
     </div>
   </div>
 </template>
 
 <script>
+import OperatorPannel from './OperatorPannel.js'
 import Creator from './creator'
 export default {
   name: 'App',
+  components: {
+    OperatorPannel
+  },
   data() {
     return {
       wrapper: null,
