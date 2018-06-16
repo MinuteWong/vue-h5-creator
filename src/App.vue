@@ -6,6 +6,7 @@
         {{item}}
       </li>
     </ul>
+    <div id="test"></div>
     <operator-pannel></operator-pannel>
     <div class="container" id="main-wrapper">
     </div>
@@ -15,6 +16,7 @@
 <script>
 import OperatorPannel from './OperatorPannel.js'
 import Creator from './creator'
+import { PageRender } from './creator'
 export default {
   name: 'App',
   components: {
@@ -40,6 +42,7 @@ export default {
     this.wrapper = document.querySelector('#main-wrapper')
     this.widgetList = Object.keys(Creator.components)
     Creator.render('CellForm', this.wrapper)
+    new PageRender()
   }
 }
 </script>
