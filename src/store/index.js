@@ -7,7 +7,10 @@ const store = new Vuex.Store({
   state: {
     activated_id: '',
     activated_component: null,
-    component_type: {}
+    activated_page_id: '',
+    activated_page: null,
+    component_type: {},
+    page_mapper: {}
   },
   getters: {
     activated_options: state => {
