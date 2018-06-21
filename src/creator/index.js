@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import WidgetWrapper from './components/WidgetWrapper.vue'
+import PageWrapper from './components/PageWrapper.vue'
 import { create_id } from '@/utils'
 import components from '@/library'
 import store from '@/store'
@@ -24,31 +25,31 @@ document.addEventListener('keyup', function(e) {
   }
 })
 
-export class PageRender {
+export default class PageRender {
   constructor(options) {
     const self = this
-    self.page = new Vue({
-      el: '#test',
+    self.id = create_id()
+    self.components = components
+    self.vm = new Vue({
+      el: document.createElement('div'),
       store,
-      components: { ...components },
       data() {
         return {
-          children: [components.CellForm]
+          id: self.id,
+          options: {}
         }
       },
       render(h) {
-        const aa = this.children[0]
-        return h(aa)
+        return (
+          <PageWrapper id={this.id} options={this.options} />
+        )
       }
     })
+    document.querySelector(options.el).appendChild(this.vm.$el)
   }
-}
-export default {
-  widget: WidgetWrapper,
-  components,
-  renderer(type) {
-    const self = this
-    return new Vue({
+
+  addWidget(type) {
+    const vm = new Vue({
       el: document.createElement('div'),
       store,
       data: {
@@ -60,16 +61,14 @@ export default {
       },
       render: function(h) {
         if (this.destroyed) return h('')
-        return h(WidgetWrapper, {
-          props: {
-            id: this.id
-          }
-        }, [h(self.components[type])])
+        const Widget = components[type]
+        return (
+          <WidgetWrapper id={this.id}>
+            <Widget />
+          </WidgetWrapper>
+        )
       }
     })
-  },
-  render(type, $el) {
-    const $vm = this.renderer(type)
-    $el.appendChild($vm.$el)
+    this.vm.$el.appendChild(vm.$el)
   }
 }

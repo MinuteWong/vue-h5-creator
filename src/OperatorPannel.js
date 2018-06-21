@@ -13,7 +13,7 @@ export default {
   render(h) {
     return (
       <div>
-        <el-input value={this.options.style.width} placeholder='请输入内容' onChange={this.handleChage}></el-input>
+        <el-input value={this.options.style.width} placeholder='请输入内容' onChange={this.handleChage} />
       </div>
     )
   }

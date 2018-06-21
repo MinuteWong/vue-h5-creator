@@ -15,8 +15,8 @@
 
 <script>
 import OperatorPannel from './OperatorPannel.js'
-import Creator from './creator'
-import { PageRender } from './creator'
+// import Creator from './creator'
+import PageRender from './creator'
 export default {
   name: 'App',
   components: {
@@ -25,7 +25,8 @@ export default {
   data() {
     return {
       wrapper: null,
-      widgetList: []
+      widgetList: [],
+      page: null
     }
   },
   computed: {
@@ -35,14 +36,15 @@ export default {
   },
   methods: {
     addWidget(item) {
-      Creator.render(item, this.wrapper)
+      this.page.addWidget(item)
+      // Creator.render(item, this.wrapper)
     }
   },
   mounted() {
-    this.wrapper = document.querySelector('#main-wrapper')
-    this.widgetList = Object.keys(Creator.components)
-    Creator.render('CellForm', this.wrapper)
-    new PageRender()
+    // this.wrapper = document.querySelector('#main-wrapper')
+    // Creator.render('CellForm', this.wrapper)
+    this.page = new PageRender({ el: '#main-wrapper' })
+    this.widgetList = Object.keys(this.page.components)
   }
 }
 </script>
@@ -58,6 +60,7 @@ export default {
   height: 750px;
   margin: 0 auto;
   position: relative;
+  overflow: auto;
   background: url("/static/simple.jpg");
 }
 .list {

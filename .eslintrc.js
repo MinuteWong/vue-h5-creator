@@ -4,14 +4,18 @@ module.exports = {
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
-      sourceType: 'module'
+      sourceType: 'module',
+      "ecmaFeatures": {
+        "jsx": true,
+        "experimentalObjectRestSpread": true
+      }
   },
   env: {
       browser: true,
       node: true,
       es6: true,
   },
-  extends: 'eslint:recommended',
+  extends: ["standard-jsx",'eslint:recommended'],
   // required to lint *.vue files
   plugins: [
       'html'
