@@ -34,6 +34,19 @@ export default {
   },
   mounted() {
     const vm = this
+    vm.$nextTick(() => {
+      const rect = vm.$el.getBoundingClientRect()
+      vm.$store.commit('OPTIONS_CHANGE', {
+        id: vm.id,
+        style: {
+          height: parseInt(rect.height),
+          width: parseInt(rect.width),
+          left: +vm.$el.style.left.replace('px', ''),
+          top: +vm.$el.style.left.replace('px', '')
+        },
+        type: 'widget'
+      })
+    })
     interact(`#${this.id}`)
       .draggable({
         onmove: function(event) {

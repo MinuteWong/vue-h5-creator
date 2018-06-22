@@ -20,6 +20,7 @@ export default class PageRender {
     const self = this
     self.id = create_id()
     self.style = {}
+    self.type = 'page'
     self.components = components
     self.vm = new Vue({
       el: document.createElement('div'),
@@ -35,8 +36,8 @@ export default class PageRender {
         )
       }
     })
-    document.querySelector(options.el).appendChild(this.vm.$el)
-    // document.addEventListener('click', () => store.commit('SET_ACTIVATED', null))
+    document.querySelector(options.el).appendChild(self.vm.$el)
+    self.vm.$el.addEventListener('click', () => store.commit('SET_ACTIVATED', null))
     store.commit('ADD_PAGE', this)
   }
 
@@ -52,6 +53,7 @@ export default class PageRender {
         this.$store.commit('ADD_COMPONENT_TYPE', {
           [this.id]: {
             vm: this,
+            type: type,
             style: {}
           }
         })

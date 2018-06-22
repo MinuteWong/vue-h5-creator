@@ -6,7 +6,7 @@
         {{item}}
       </li>
     </ul>
-    <operator-pannel></operator-pannel>
+    <operator-pannel style="float:right"></operator-pannel>
     <div class="container" id="main-wrapper">
     </div>
   </div>
@@ -60,5 +60,6 @@ export default {
 }
 .list {
   cursor: pointer;
+  float: left;
 }
 </style>
