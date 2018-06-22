@@ -13,8 +13,8 @@ export const widgetInitOptions = {
   style: {
     left: 0,
     top: 0,
-    width: 'initial',
-    height: 'initial'
+    width: '',
+    height: ''
   }
 }
 

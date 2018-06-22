@@ -1,13 +1,7 @@
 <template>
-    <div class="widget-wrapper" :id="id">
-      <p class="widget-tips">
-        x:{{options.style.left}}
-        y:{{options.style.top}}
-        宽：{{options.style.width}}
-        高：{{options.style.height}}
-      </p>
+    <div class="widget-wrapper" :id="id" :style="style">
       <div :class="{'widget-model':isActived}" class="widget-container">
-          <slot></slot>
+          <slot :styleOptions="style"></slot>
       </div>
     </div>
 </template>
@@ -15,11 +9,6 @@
 <script>
 import interact from 'interactjs'
 export default {
-  // data() {
-  //   return {
-  //     id: null
-  //   }
-  // },
   props: {
     id: {
       type: String,
@@ -30,8 +19,17 @@ export default {
     isActived() {
       return this.$store.state.activated_id === this.id
     },
-    options() {
-      return this.$store.state.component_type[this.id].options
+    style() {
+      const style = this.$store.state.component_type[this.id].style
+      const styleObj = {}
+      Object.keys(style).map(key => {
+        if (typeof style[key] === 'number') {
+          styleObj[key] = style[key] + 'px'
+        } else {
+          styleObj[key] = style[key]
+        }
+      })
+      return styleObj
     }
   },
   mounted() {
@@ -45,13 +43,15 @@ export default {
           const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
           // translate the element
-          target.style.webkitTransform = target.style.transform =
-            'translate(' + x + 'px, ' + y + 'px)'
+          // target.style.webkitTransform = target.style.transform =
+          //   'translate(' + x + 'px, ' + y + 'px)'
+          target.style.left = x + 'px'
+          target.style.top = y + 'px'
 
           // update the posiion attributes
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
-          vm.$store.commit('OPTIONS_CHANGE', { id: vm.id, options: { style: { left: x, top: y }}})
+          vm.$store.commit('OPTIONS_CHANGE', { id: vm.id, style: { left: x, top: y }})
         },
         restrict: {
           restriction: 'parent',
@@ -87,12 +87,14 @@ export default {
         x += event.deltaRect.left
         y += event.deltaRect.top
 
-        target.style.webkitTransform = target.style.transform =
-          'translate(' + x + 'px,' + y + 'px)'
+        // target.style.webkitTransform = target.style.transform =
+        //   'translate(' + x + 'px,' + y + 'px)'
+        target.style.left = x + 'px'
+        target.style.top = y + 'px'
 
         target.setAttribute('data-x', x)
         target.setAttribute('data-y', y)
-        vm.$store.commit('OPTIONS_CHANGE', { id: vm.id, options: { style: { width: target.style.width, height: target.style.height }}})
+        vm.$store.commit('OPTIONS_CHANGE', { id: vm.id, style: { width: event.rect.width, height: event.rect.height }})
         // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
       })
   }
@@ -107,7 +109,6 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  background: red;
   box-sizing: border-box;
 }
 .widget-container{

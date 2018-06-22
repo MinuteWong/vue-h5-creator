@@ -9,7 +9,8 @@ import { Checklist } from 'vux'
 export default {
   data() {
     return {
-      commonList: ['China', 'Japan', 'America']
+      commonList: ['China', 'Japan', 'America'],
+      checklist001: []
     }
   },
   components: {

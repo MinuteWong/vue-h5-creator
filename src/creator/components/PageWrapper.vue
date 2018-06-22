@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     style() {
-      return this.$store.state.page_mapper[this.id] ? this.$store.state.page_mapper[this.id].options.style : {}
+      return this.$store.state.page_mapper[this.id] ? this.$store.state.page_mapper[this.id].style : {}
     }
   }
 }

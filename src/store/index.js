@@ -13,8 +13,8 @@ const store = new Vuex.Store({
     page_mapper: {}
   },
   getters: {
-    activated_options: state => {
-      return state.activated_component && state.activated_component.options
+    activated_element: state => {
+      return state.activated_component || state.activated_page
     }
   },
   mutations: {
@@ -36,7 +36,7 @@ const store = new Vuex.Store({
       state.page_mapper = Object.assign({}, state.page_mapper, { [pager.id]: pager })
     },
     OPTIONS_CHANGE(state, data) {
-      state.component_type[data.id].options = Object.assign({}, _.merge(state.component_type[data.id].options, data.options))
+      state.component_type[data.id].style = Object.assign({}, _.merge(state.component_type[data.id].style, data.style))
     }
   },
   actions: {
