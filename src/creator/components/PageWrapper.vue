@@ -1,9 +1,9 @@
 <template>
     <div :id="id" class="page-wrapper" 
         :style="{
-            backgroundColor:options.backgroundColor,
-            backgroundImage:options.backgroundImage,
-            height:options.height
+            backgroundColor:style.backgroundColor,
+            backgroundImage:style.backgroundImage,
+            height:style.height
         }">
     </div>
 </template>
@@ -13,17 +13,11 @@ export default {
   props: {
     id: {
       require: true
-    },
-    options: {
-      require: true,
-      type: Object,
-      default() {
-        return {
-          backgroundImage: '',
-          backgroundColor: '',
-          height: ''
-        }
-      }
+    }
+  },
+  computed: {
+    style() {
+      return this.$store.state.page_mapper[this.id] ? this.$store.state.page_mapper[this.id].options.style : {}
     }
   }
 }

@@ -20,7 +20,7 @@ const store = new Vuex.Store({
   mutations: {
     SET_ACTIVATED(state, id) {
       state.activated_id = id
-      state.activated_component = state.component_type[id] ? state.component_type[id] : null
+      state.activated_component = state.component_type[id]
     },
     ADD_COMPONENT_TYPE(state, vm) {
       state.component_type = Object.assign({}, state.component_type, vm)
@@ -29,6 +29,11 @@ const store = new Vuex.Store({
       state.component_type[activated_id].vm.$destroy()
       delete state.component_type[activated_id]
       state.component_type = Object.assign({}, state.component_type)
+    },
+    ADD_PAGE(state, pager) {
+      state.activated_id = pager.id
+      state.activated_page = pager
+      state.page_mapper = Object.assign({}, state.page_mapper, { [pager.id]: pager })
     },
     OPTIONS_CHANGE(state, data) {
       state.component_type[data.id].options = Object.assign({}, _.merge(state.component_type[data.id].options, data.options))

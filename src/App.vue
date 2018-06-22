@@ -6,7 +6,6 @@
         {{item}}
       </li>
     </ul>
-    <div id="test"></div>
     <operator-pannel></operator-pannel>
     <div class="container" id="main-wrapper">
     </div>
@@ -25,25 +24,21 @@ export default {
   data() {
     return {
       wrapper: null,
-      widgetList: [],
-      page: null
+      widgetList: []
     }
   },
   computed: {
-    id() {
-      return this.$store.state.activated_id
+    page() {
+      return this.$store.state.activated_page
     }
   },
   methods: {
     addWidget(item) {
       this.page.addWidget(item)
-      // Creator.render(item, this.wrapper)
     }
   },
   mounted() {
-    // this.wrapper = document.querySelector('#main-wrapper')
-    // Creator.render('CellForm', this.wrapper)
-    this.page = new PageRender({ el: '#main-wrapper' })
+    new PageRender({ el: '#main-wrapper' })
     this.widgetList = Object.keys(this.page.components)
   }
 }
