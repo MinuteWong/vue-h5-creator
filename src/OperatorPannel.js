@@ -7,11 +7,24 @@ export default {
     },
     activated_id() {
       return this.$store.state.activated_id
+    },
+    activated_page_id() {
+      return this.$store.state.activated_page_id
     }
   },
   methods: {
     handleChage(val) {
-      this.$store.commit('OPTIONS_CHANGE', { id: this.activated_id, style: { backgroundColor: val }})
+      const commitData = {}
+      if (this.activated_id) {
+        commitData.id = this.activated_id
+        commitData.style = { backgroundColor: val }
+        commitData.type = 'widget'
+      } else {
+        commitData.id = this.activated_page_id
+        commitData.style = { backgroundColor: val }
+        commitData.type = 'page'
+      }
+      this.$store.commit('OPTIONS_CHANGE', commitData)
     }
   },
   render(h) {

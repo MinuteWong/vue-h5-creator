@@ -19,7 +19,12 @@ export default class PageRender {
   constructor(options) {
     const self = this
     self.id = create_id()
-    self.style = {}
+    self.style = {
+      width: 375,
+      height: 750,
+      left: 0,
+      top: 0
+    }
     self.type = 'page'
     self.components = components
     self.vm = new Vue({

@@ -31,12 +31,16 @@ const store = new Vuex.Store({
       state.component_type = Object.assign({}, state.component_type)
     },
     ADD_PAGE(state, pager) {
-      state.activated_id = pager.id
+      state.activated_page_id = pager.id
       state.activated_page = pager
       state.page_mapper = Object.assign({}, state.page_mapper, { [pager.id]: pager })
     },
     OPTIONS_CHANGE(state, data) {
-      state.component_type[data.id].style = Object.assign({}, _.merge(state.component_type[data.id].style, data.style))
+      if (data.type === 'widget') {
+        state.component_type[data.id].style = Object.assign({}, _.merge(state.component_type[data.id].style, data.style))
+      } else {
+        state.page_mapper[data.id].style = Object.assign({}, _.merge(state.page_mapper[data.id].style, data.style))
+      }
     }
   },
   actions: {

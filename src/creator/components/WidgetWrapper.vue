@@ -64,7 +64,11 @@ export default {
           // update the posiion attributes
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
-          vm.$store.commit('OPTIONS_CHANGE', { id: vm.id, style: { left: x, top: y }})
+          vm.$store.commit('OPTIONS_CHANGE', {
+            type: 'widget',
+            id: vm.id,
+            style: { left: parseInt(x), top: parseInt(y) }
+          })
         },
         restrict: {
           restriction: 'parent',
@@ -107,7 +111,14 @@ export default {
 
         target.setAttribute('data-x', x)
         target.setAttribute('data-y', y)
-        vm.$store.commit('OPTIONS_CHANGE', { id: vm.id, style: { width: event.rect.width, height: event.rect.height }})
+        vm.$store.commit('OPTIONS_CHANGE', {
+          id: vm.id,
+          type: 'widget',
+          style: {
+            width: parseInt(event.rect.width),
+            height: parseInt(event.rect.height)
+          }
+        })
         // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
       })
   }
@@ -124,25 +135,25 @@ export default {
   top: 0;
   box-sizing: border-box;
 }
-.widget-container{
+.widget-container {
   overflow: hidden;
   height: 100%;
   width: 100%;
   position: relative;
-   box-sizing: border-box;
+  box-sizing: border-box;
 }
-.widget-model::before{
+.widget-model::before {
   content: "";
-  width:100%;
+  width: 100%;
   height: 100%;
   box-sizing: border-box;
   position: absolute;
-  border: 2px solid  blue;
+  border: 2px solid blue;
   z-index: 100;
 }
-.widget-tips{
+.widget-tips {
   position: absolute;
-  z-index: 99
+  z-index: 99;
 }
 </style>
 
