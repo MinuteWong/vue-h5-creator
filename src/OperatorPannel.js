@@ -38,6 +38,20 @@ export default {
     },
     handleHide() {
       this.dialogTableVisible = false
+    },
+    handleChangeBg(val) {
+      this.dialogTableVisible = false
+      const commitData = {}
+      if (this.activated_id) {
+        commitData.id = this.activated_id
+        commitData.style = { backgroundImage: `url(${val})` }
+        commitData.type = 'widget'
+      } else {
+        commitData.id = this.activated_page_id
+        commitData.style = { backgroundImage: `url(${val})` }
+        commitData.type = 'page'
+      }
+      this.$store.commit('OPTIONS_CHANGE', commitData)
     }
   },
   render(h) {
@@ -72,7 +86,7 @@ export default {
           title='图片素材'
           visible={this.dialogTableVisible}
           {...{ on: { 'update:visible': this.handleHide }}}>
-          <ImgManage />
+          <ImgManage {...{ on: { 'selectBg': this.handleChangeBg }}} />
         </el-dialog>
       </div>
     )
