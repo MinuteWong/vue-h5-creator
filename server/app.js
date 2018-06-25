@@ -3,6 +3,7 @@ const Router = require('koa-router')
 const bodyParser = require('koa-bodyparser')
 const serve = require('koa-static')
 const path = require('path')
+const fs = require('fs')
 const { uploadFile } = require('./service/upload')
 
 const app = new Koa()
@@ -11,6 +12,10 @@ const router = new Router()
 const staticPath = './static'
 
 router.get('/api/media/img', async(ctx, next) => {
+  const file = fs.readdirSync(path.join(__dirname, 'static/album'))
+  ctx.body = file.map(dir => {
+    return 'http://localhost/album/' + dir
+  })
   next()
 })
 
