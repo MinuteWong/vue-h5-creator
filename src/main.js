@@ -5,9 +5,12 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from '@/store'
 import App from './App'
+import IconFont from './components/IconFont.vue'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+
+Vue.component('Icon', IconFont)
 
 /* eslint-disable no-new */
 new Vue({

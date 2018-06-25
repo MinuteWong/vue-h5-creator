@@ -1,6 +1,13 @@
 import '@/style/operatorBar.scss'
+import ImgManage from '@/components/ImgManage.vue'
 export default {
   name: 'OperatorPannel',
+  data() {
+    return {
+      form: {},
+      dialogTableVisible: false
+    }
+  },
   computed: {
     style() {
       return this.$store.getters.activated_element ? this.$store.getters.activated_element.style : {}
@@ -25,6 +32,12 @@ export default {
         commitData.type = 'page'
       }
       this.$store.commit('OPTIONS_CHANGE', commitData)
+    },
+    handleClick(val) {
+      this.dialogTableVisible = true
+    },
+    handleHide() {
+      this.dialogTableVisible = false
     }
   },
   render(h) {
@@ -40,7 +53,27 @@ export default {
             <span>Y坐标：{this.style.top}</span>
           </p>
         </div>
-        <el-input value={this.style.backgroundColor} placeholder='请输入当前元素背景颜色' onInput={this.handleChage} />
+        <el-form ref='form' label-width='100px' size='small'>
+          {/* <el-form-item label='背景颜色：'>
+            <el-color-picker value={this.style.backgroundColor} onInput={this.handleChage} />
+          </el-form-item> */}
+          <el-form-item label='背景：'>
+            <el-color-picker
+              value={this.style.backgroundColor}
+              onInput={this.handleChage} />
+            <icon
+              iconClass='icon-ai-up-img'
+              class='select_img'
+              nativeOnClick={this.handleClick}
+            />
+          </el-form-item>
+        </el-form>
+        <el-dialog
+          title='图片素材'
+          visible={this.dialogTableVisible}
+          {...{ on: { 'update:visible': this.handleHide }}}>
+          <ImgManage />
+        </el-dialog>
       </div>
     )
   }

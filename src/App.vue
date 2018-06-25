@@ -14,7 +14,6 @@
 
 <script>
 import OperatorPannel from './OperatorPannel.js'
-// import Creator from './creator'
 import PageRender from './creator'
 export default {
   name: 'App',
@@ -44,7 +43,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import url('./style/normalize.css');
+@import url('./icon/iconfont.css');
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
